@@ -222,7 +222,11 @@ final class InstallCommand extends Command
 
                 foreach ($simplePorts as $port) {
                     $env[$port] = (int)$io->ask(
-                        $envConfig[$port]['name'] . ' - ' . $envConfig[$port]['description'],
+                        sprintf(
+                            '%s - %s',
+                            $envConfig[$port]['name'],
+                            $envConfig[$port]['description'] ?? ''
+                        ),
                         (string)$env[$port]
                     );
                 }
@@ -301,7 +305,7 @@ final class InstallCommand extends Command
         $ports = $env['AZURACAST_STATION_PORTS'] ?? '';
 
         $envConfig = $env::getConfiguration($this->environment);
-        $defaultPorts = $envConfig['AZURACAST_STATION_PORTS']['default'];
+        $defaultPorts = $envConfig['AZURACAST_STATION_PORTS']['default'] ?? '';
 
         if (!empty($ports) && 0 !== strcmp($ports, $defaultPorts)) {
             $yamlPorts = [];

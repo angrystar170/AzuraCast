@@ -28,7 +28,7 @@ final class View extends Engine
 
     private GlobalSections $sections;
 
-    /** @var ArrayCollection<string, array|object|string|int> */
+    /** @var ArrayCollection<string, array|object|string|int|bool> */
     private ArrayCollection $globalProps;
 
     public function __construct(
@@ -169,7 +169,7 @@ final class View extends Engine
             }
 
             $customization = $request->getAttribute(ServerRequest::ATTR_CUSTOMIZATION);
-            if (null !== $customization) {
+            if ($customization instanceof Customization) {
                 $requestData['customization'] = $customization;
 
                 $this->globalProps->set(
@@ -246,7 +246,7 @@ final class View extends Engine
         return $this->sections;
     }
 
-    /** @return ArrayCollection<string, array|object|string|int> */
+    /** @return ArrayCollection<string, array|object|string|int|bool> */
     public function getGlobalProps(): ArrayCollection
     {
         return $this->globalProps;

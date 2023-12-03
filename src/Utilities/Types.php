@@ -6,6 +6,14 @@ namespace App\Utilities;
 
 final class Types
 {
+    public static function string(
+        mixed $input,
+        string $defaultIfNull = '',
+        bool $countEmptyAsNull = false
+    ): string {
+        return self::stringOrNull($input, $countEmptyAsNull) ?? $defaultIfNull;
+    }
+
     public static function stringOrNull(
         mixed $input,
         bool $countEmptyAsNull = false
@@ -26,6 +34,11 @@ final class Types
         return (string)$input;
     }
 
+    public static function int(mixed $input, int $defaultIfNull = 0): int
+    {
+        return self::intOrNull($input) ?? $defaultIfNull;
+    }
+
     public static function intOrNull(mixed $input): ?int
     {
         if (null === $input || is_int($input)) {
@@ -37,6 +50,11 @@ final class Types
             : null;
     }
 
+    public static function float(mixed $input, float $defaultIfNull = 0.0): float
+    {
+        return self::floatOrNull($input) ?? $defaultIfNull;
+    }
+
     public static function floatOrNull(mixed $input): ?float
     {
         if (null === $input || is_float($input)) {
@@ -46,6 +64,11 @@ final class Types
         return (is_numeric($input))
             ? (float)$input
             : null;
+    }
+
+    public static function bool(mixed $input, bool $defaultIfNull = false, bool $broadenValidBools = false): bool
+    {
+        return self::boolOrNull($input, $broadenValidBools) ?? $defaultIfNull;
     }
 
     public static function boolOrNull(mixed $input, bool $broadenValidBools = false): ?bool
@@ -66,6 +89,11 @@ final class Types
         }
 
         return (bool)$input;
+    }
+
+    public static function array(mixed $input, array $defaultIfNull = []): array
+    {
+        return self::arrayOrNull($input) ?? $defaultIfNull;
     }
 
     public static function arrayOrNull(mixed $input): ?array

@@ -12,6 +12,7 @@ use App\Installer\EnvFiles\AzuraCastEnvFile;
 use App\Installer\EnvFiles\EnvFile;
 use App\Radio\Configuration;
 use App\Utilities\Strings;
+use App\Utilities\Types;
 use InvalidArgumentException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -45,12 +46,12 @@ final class InstallCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $baseDir = $input->getArgument('base-dir') ?? self::DEFAULT_BASE_DIRECTORY;
-        $update = (bool)$input->getOption('update');
-        $defaults = (bool)$input->getOption('defaults');
-        $httpPort = $input->getOption('http-port');
-        $httpsPort = $input->getOption('https-port');
-        $releaseChannel = $input->getOption('release-channel');
+        $baseDir = Types::string($input->getArgument('base-dir'), self::DEFAULT_BASE_DIRECTORY);
+        $update = Types::bool($input->getOption('update'));
+        $defaults = Types::bool($input->getOption('defaults'));
+        $httpPort = Types::intOrNull($input->getOption('http-port'));
+        $httpsPort = Types::intOrNull($input->getOption('https-port'));
+        $releaseChannel = Types::stringOrNull($input->getOption('release-channel'));
 
         $devMode = ($baseDir !== self::DEFAULT_BASE_DIRECTORY);
 

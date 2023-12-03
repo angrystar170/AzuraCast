@@ -17,7 +17,6 @@ use League\Plates\Engine;
 use League\Plates\Template\Data;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use stdClass;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
@@ -151,7 +150,7 @@ final class View extends Engine
         $dispatcher->dispatch(new Event\BuildView($this));
     }
 
-    public function setRequest(?ServerRequestInterface $request): void
+    public function setRequest(?ServerRequest $request): void
     {
         $this->request = $request;
 
